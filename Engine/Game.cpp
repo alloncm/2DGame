@@ -21,11 +21,11 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd ),
-	a("pilgrim108x140.bmp",0.1f,108,140,{0,0},{864,140},Colors::Magenta)
+	wnd(wnd),
+	gfx(wnd),
+	a("pilgrim108x140.bmp", 0.1f, 108, 140, { 0,0 }, { 864,140 }, Colors::Magenta)
 {
 }
 
@@ -39,7 +39,8 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	a.Update(t.Tick());
+	float f = t.Tick();
+	a.Update(f);
 }
 
 void Game::ComposeFrame()

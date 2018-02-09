@@ -19,6 +19,25 @@ Animation::Animation(std::string s, float ht, int w, int h, Vec2_<int> start, Ve
 	}
 }
 
+Animation::Animation(std::string s, float ht, int w, int h, Color ch)
+	:
+	source(SpriteManager::GetManager().Get(s)),
+	holdTime(ht),
+	width(w),
+	height(h),
+	curFrame(0),
+	time(0),
+	chroma(ch)
+{
+	for (int i = 0; i < source->GetHeight(); i += h)
+	{
+		for (int j = 0; j < source->GetWidth(); j += w)
+		{
+			frames.emplace_back(RectI(j, i, w, h));
+		}
+	}
+}
+
 void Animation::Update(float dt)
 {
 	time += dt;

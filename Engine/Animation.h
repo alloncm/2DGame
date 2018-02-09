@@ -8,6 +8,7 @@ class Animation
 {
 public:
 	Animation(std::string source, float HoldTime, int width, int height, Vec2_<int>start, Vec2_<int>stop, Color ch);
+	Animation(std::string source, float HoldTime, int width, int height, Color ch);
 	void Update(float dt);
 	void Draw(Vec2_<int> pos, Graphics& gfx);
 private:

@@ -42,7 +42,7 @@ Surface::Surface(std::string filename)
 	else
 	{
 		yStart = bmpih.biHeight - 1;
-		yEnd = 0;
+		yEnd = -1;
 		yInc = -1;
 		this->height = bmpih.biHeight;
 	}
@@ -54,11 +54,12 @@ Surface::Surface(std::string filename)
 	pixels.resize(width*height);
 
 	int padding = (4 - (width * 3) % 4) % 4;
-	for (int x = 0; x < width; x++)
+	
+	for (int y = yStart; y != yEnd; y += yInc)
 	{
-		for (int y=yStart; y != yEnd; y += yInc)
+		for (int x = 0; x < width; x++)
 		{
-			pixels[x*height + y] = Color(fin.get(), fin.get(), fin.get());
+			pixels[y*width+x] = Color(fin.get(), fin.get(), fin.get());
 			if (Is32)
 			{
 				fin.seekg(1,std::ios::cur);
@@ -89,12 +90,12 @@ Surface & Surface::operator=(Surface && s)
 
 void Surface::PutPixel(int x, int y, Color c)
 {
-	pixels[x*height + y] = c;
+	pixels[y*width+x] = c;
 }
 
 Color Surface::GetPixel(int x, int y) const
 {
-	return pixels[x*height + y];
+	return pixels[y*width+x];
 }
 
 int Surface::GetHeight() const

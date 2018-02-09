@@ -91,6 +91,18 @@ public:
 	{
 		dword = (dword & 0xFFFFFF00u) | b;
 	}
+	bool operator==(const Color c)const 
+	{
+		if (c.dword == this->dword)
+		{
+			return true;
+		}
+		return false;
+	}
+	bool operator!=(const Color c)const
+	{
+		return !(*this == c);
+	}
 };
 
 namespace Colors

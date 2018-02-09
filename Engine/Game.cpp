@@ -25,7 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	s("coolChars384x256.bmp")
+	a("pilgrim108x140.bmp",0.1f,108,140,{0,0},{864,140},Colors::Magenta)
 {
 }
 
@@ -39,11 +39,10 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	a.Update(t.Tick());
 }
 
 void Game::ComposeFrame()
 {
-	gfx.DrawSprite(0, 0, s, [](Color c,int x,int y,Graphics& g) {
-		g.PutPixel(x, y, c);
-	});
+	a.Draw({ 0,0 }, gfx);
 }

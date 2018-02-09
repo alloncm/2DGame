@@ -24,6 +24,8 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include"Surface.h"
+#include"Animation.h"
+#include"Timer.h"
 class Game
 {
 public:
@@ -42,6 +44,7 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	Surface s;
+	Animation a;
+	Timer t;
 	/********************************/
 };

@@ -23,6 +23,8 @@
 #include <wrl.h>
 #include "ChiliException.h"
 #include "Colors.h"
+#include"Rect.h"
+#include"Surface.h"
 
 class Graphics
 {
@@ -56,6 +58,51 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
+
+	template<typename T>
+	void DrawSprite(int x, int y, const Surface & s, T effect)
+		//Draw the sprite to the screen with an effect
+	{
+		DrawSprite(x, y, s.GetRect(), s, effect);
+	}
+
+	template<typename T>
+	void DrawSprite(int x, int y, RectI & src, const Surface & s, T effect)
+		//draw the sprite to the screen with effect draws only the part the rect pionts to
+	{
+		DrawSprite(x, y, src, GetScreenRect(), s, effect);
+	}
+
+	template<typename T>
+	void DrawSprite(int x, int y, RectI & src, RectI & clip, const Surface & s, T effect)
+		//draw the sprite and the effect only the part src points to and only if the sprite is int he clip
+	{
+		//some assertion
+
+		assert(src.GetTopLeft().x >= 0);
+		assert(src.GetTopLeft().y >= 0);
+		assert(src.GetBotoomRight().x <= s.GetWidth());
+		assert(src.GetBotoomRight().y <= s.GetHeight());
+
+		for (int sy = src.GetTopLeft().y; sy < src.GetBotoomRight().y; sy++)
+		{
+			for (int sx = src.GetTopLeft().x; sx < src.GetBotoomRight().x; sx++)
+			{
+				if (clip.IsInside({ x + sx - src.GetTopLeft().x, y + sy - src.GetTopLeft().y }))
+				{
+					const int xDist = x + sx - src.GetTopLeft().x;
+					const int yDist = y + sy - src.GetTopLeft().y;
+					effect(
+						s.GetPixel(sx, sy),
+						xDist,
+						yDist,
+						*this
+					);
+				}
+			}
+		}
+	}
+	RectI GetScreenRect()const;
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

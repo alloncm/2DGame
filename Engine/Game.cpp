@@ -24,7 +24,8 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	s("coolChars384x256.bmp")
 {
 }
 
@@ -42,4 +43,7 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	gfx.DrawSprite(0, 0, s, [](Color c,int x,int y,Graphics& g) {
+		g.PutPixel(x, y, c);
+	});
 }

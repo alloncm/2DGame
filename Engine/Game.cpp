@@ -25,8 +25,9 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	a("pilgrim108x140.bmp", 0.1f, 108, 140, { 0,0 }, { 864,140 }, Colors::Magenta)
+	s("pilgrim108x140.bmp")
 {
+	s.ToMiror();
 }
 
 void Game::Go()
@@ -39,11 +40,12 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	float f = t.Tick();
-	a.Update(f);
+	
 }
 
 void Game::ComposeFrame()
 {
-	a.Draw({ 0,0 }, gfx);
+	gfx.DrawSprite(0, 0, s, [](Color c, int x, int y, Graphics& gfx) {
+		gfx.PutPixel(x, y,c);
+	});
 }

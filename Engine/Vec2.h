@@ -94,5 +94,8 @@ public:
 	}
 };
 
+template<typename T1,typename T2>
+
+
 typedef Vec2_<float> Vec2;
 typedef Vec2_<int> Location;

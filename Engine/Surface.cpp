@@ -124,6 +124,17 @@ RectI Surface::GetRect() const
 	return RectI(0,0,width,height);
 }
 
+void Surface::ToMiror()
+{
+	for (int xtemp = 0, x = width - 1; xtemp < width/2; xtemp++, x--)
+	{
+		for (int y = 0; y < height; y++)
+		{
+			std::swap(pixels[y*width + x], pixels[y*width + xtemp]);
+		}
+	}
+}
+
 
 
 

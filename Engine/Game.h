@@ -44,7 +44,6 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	Animation a;
-	Timer t;
+	Surface s;
 	/********************************/
 };

@@ -22,6 +22,7 @@ public:
 	int GetWidth()const;
 	void Fill(Color c);
 	RectI GetRect()const;
+	void ToMiror();
 private:
 	int width;
 	int height;

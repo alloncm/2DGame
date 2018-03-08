@@ -40,7 +40,11 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	
+	if (wnd.kbd.KeyIsPressed('S') && ss==false)
+	{
+		gfx.ScreenShot(std::string("screenshot.bmp"));
+		ss = true;
+	}
 }
 
 void Game::ComposeFrame()

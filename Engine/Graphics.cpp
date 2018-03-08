@@ -245,6 +245,54 @@ RectI Graphics::GetScreenRect() const
 	return RectI(0,0,ScreenWidth-1,ScreenHeight-1);
 }
 
+void Graphics::ScreenShot(std::string & filename)
+{
+	BITMAPINFOHEADER bmpi;
+	bmpi.biBitCount = 24;
+	bmpi.biSize = sizeof(bmpi);
+	bmpi.biWidth = this->ScreenWidth;
+	bmpi.biHeight = this->ScreenHeight;
+	bmpi.biPlanes = 0;
+	bmpi.biCompression = 0;
+	bmpi.biSizeImage = 0;
+	bmpi.biXPelsPerMeter = 0;
+	bmpi.biYPelsPerMeter = 0;
+	bmpi.biClrUsed = 0;
+	bmpi.biClrImportant = 0;
+
+	BITMAPFILEHEADER bmph;
+	bmph.bfType = 'BM';
+	bmph.bfReserved1 = 0;
+	bmph.bfReserved2 = 0;
+	bmph.bfSize = sizeof(bmph) + sizeof(bmpi) + sizeof(bmpi.biWidth*bmpi.biHeight * 3);
+	bmph.bfOffBits = sizeof(bmph) + sizeof(bmpi);
+
+	std::ofstream fout(filename, std::ios::binary);
+	fout.exceptions(std::ios::badbit | std::ios::failbit);
+
+	fout.write(reinterpret_cast<char*> (&bmph), sizeof(bmph));
+	fout.write(reinterpret_cast<char*> (&bmpi), sizeof(bmpi));
+
+	int countBytes = 0;
+	for (int i = 0; i < bmpi.biHeight; i++)
+	{
+		for (int j = 0; j < bmpi.biWidth; j++)
+		{
+			fout.put(pSysBuffer[i*bmpi.biWidth + j].GetR());
+			fout.put(pSysBuffer[i*bmpi.biWidth + j].GetG());
+			fout.put(pSysBuffer[i*bmpi.biWidth + j].GetB());
+			countBytes += 3;
+		}
+		while (countBytes % 4 != 0)
+		{
+			fout.put(0);
+			countBytes++;
+		}
+		countBytes = 0;
+	}
+	fout.close();
+}
+
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)

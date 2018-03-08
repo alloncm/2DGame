@@ -26,7 +26,6 @@ Surface::Surface(std::string filename)
 	BITMAPINFOHEADER bmpih;
 	fin.read(reinterpret_cast<char*>(&bmpih),sizeof(bmpih));
 
-
 	assert(bmpih.biBitCount == 24 || bmpih.biBitCount == 32);
 	assert(bmpih.biCompression == BI_RGB);
 	bool Is32 = bmpih.biBitCount == 32;
@@ -133,6 +132,36 @@ void Surface::ToMiror()
 			std::swap(pixels[y*width + x], pixels[y*width + xtemp]);
 		}
 	}
+}
+
+void Surface::Save(std::string & filename)
+{
+	BITMAPINFOHEADER bmpi;
+	bmpi.biBitCount = 24;
+	bmpi.biSize = sizeof(bmpi);
+	bmpi.biWidth = this->width;
+	bmpi.biHeight = this->height;
+	bmpi.biPlanes = 0;
+	bmpi.biCompression = 0;
+	bmpi.biSizeImage = 0;
+	bmpi.biXPelsPerMeter = 0;
+	bmpi.biYPelsPerMeter = 0;
+	bmpi.biClrUsed = 0;
+	bmpi.biClrImportant = 0;
+
+	BITMAPFILEHEADER bmph;
+	bmph.bfType = 'BM';
+	bmph.bfReserved1 = 0;
+	bmph.bfReserved2 = 0;
+	bmph.bfSize = sizeof(bmph) + sizeof(bmpi) + sizeof(this->pixels.size() * 3);
+	bmph.bfOffBits = sizeof(bmph) + sizeof(bmpi);
+
+	std::ofstream fout(filename,std::ios::binary);
+	fout.exceptions(std::ios::badbit | std::ios::failbit);
+
+	fout.write(reinterpret_cast<char*> (&bmph), sizeof(bmph));
+	fout.write(reinterpret_cast<char*> (&bmpi), sizeof(bmpi));
+
 }
 
 

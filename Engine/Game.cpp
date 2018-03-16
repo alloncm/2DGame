@@ -24,7 +24,8 @@
 Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
-	gfx(wnd)
+	gfx(wnd),
+	Ground(Rect<float>(0, 550, 800, 50), 0.5, Colors::Green)
 {
 }
 
@@ -42,5 +43,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	
+	Ground.Draw(gfx);
 }

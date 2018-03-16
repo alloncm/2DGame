@@ -42,6 +42,6 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	
+	PhysicsMat Ground;
 	/********************************/
 };

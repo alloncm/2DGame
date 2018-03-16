@@ -92,18 +92,13 @@ public:
 		Vec2_<T> vec(x, y);
 		return vec.GetLength();
 	}
+
+	friend Vec2_<int> Cast(Vec2_<float> v);
+	friend Vec2_<float> Cast(Vec2_<int> v);
 };
 
 
 typedef Vec2_<float> Vec2;
 typedef Vec2_<int> Location;
 
-Vec2_<int> Cast(Vec2_<float> v)
-{
-	return Vec2_<int>(int(v.x), int(v.y));
-}
 
-Vec2_<float> Cast(Vec2_<int> v)
-{
-	return Vec2_<float>(float(v.x), float(v.y));
-}

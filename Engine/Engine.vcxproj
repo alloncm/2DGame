@@ -167,9 +167,11 @@
     <ClCompile Include="PhysicsBody.cpp" />
     <ClCompile Include="PhysicsBody.h" />
     <ClCompile Include="PhysicsMat.cpp" />
+    <ClCompile Include="Rect.cpp" />
     <ClCompile Include="SpritesManager.cpp" />
     <ClCompile Include="Surface.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FramebufferPS.hlsl">

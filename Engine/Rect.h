@@ -91,17 +91,8 @@ public:
 		return RectI({ (int)v1.x,(int)v1.y }, { (int)v2.x,(int)v2.y});
 	}
 
-	friend RectI Cast(Rect<float> r);
+	friend Rect<int> Cast(Rect<float> r);
 	friend Rect<float> Cast(Rect<int> r);
 };
 typedef Rect<int> RectI;
 
-RectI Cast(Rect<float> r)
-{
-	return RectI(Cast(r.tLeft), Cast(r.bRight));
-}
-
-Rect<float> Cast(Rect<int> r)
-{
-	return Rect<float>(Cast(r.tLeft), Cast(r.bRight));
-}

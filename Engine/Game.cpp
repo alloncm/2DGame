@@ -24,10 +24,8 @@
 Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
-	gfx(wnd),
-	s("pilgrim108x140.bmp")
+	gfx(wnd)
 {
-	s.ToMiror();
 }
 
 void Game::Go()
@@ -40,16 +38,9 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	if (wnd.kbd.KeyIsPressed('S') && ss==false)
-	{
-		gfx.ScreenShot(std::string("screenshot.bmp"));
-		ss = true;
-	}
 }
 
 void Game::ComposeFrame()
 {
-	gfx.DrawSprite(0, 0, s, [](Color c, int x, int y, Graphics& gfx) {
-		gfx.PutPixel(x, y,c);
-	});
+	
 }

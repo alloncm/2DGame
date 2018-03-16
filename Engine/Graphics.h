@@ -103,6 +103,7 @@ public:
 		}
 	}
 	RectI GetScreenRect()const;
+	void DrawRect(RectI rect,Color c);
 	//void ScreenShot(std::string& filename);
 	~Graphics();
 private:

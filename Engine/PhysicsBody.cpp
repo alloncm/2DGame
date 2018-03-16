@@ -37,5 +37,10 @@ void PhysicsBody::UpdateForces()
 	{
 		sumForces += f;
 	}
+
+	//clear all the the forces that are not constant
+	forces.clear();
+
+	//get the acceleration based on Sigma F = m*a
 	acceleration = (eForces+sumForces) / mass;
 }

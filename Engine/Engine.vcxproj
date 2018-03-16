@@ -140,13 +140,14 @@
     <ClInclude Include="ChiliException.h" />
     <ClInclude Include="ChiliWin.h" />
     <ClInclude Include="Colors.h" />
-    <ClInclude Include="DemoCharacter.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="DXErr.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="PhysicsMat.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SpritesManager.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="PhysicsBody.cpp" />
     <ClCompile Include="PhysicsBody.h" />
+    <ClCompile Include="PhysicsMat.cpp" />
     <ClCompile Include="SpritesManager.cpp" />
     <ClCompile Include="Surface.cpp" />
     <ClCompile Include="Timer.cpp" />

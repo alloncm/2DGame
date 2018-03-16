@@ -244,6 +244,16 @@ RectI Graphics::GetScreenRect() const
 {
 	return RectI(0,0,ScreenWidth-1,ScreenHeight-1);
 }
+void Graphics::DrawRect(RectI rect,Color c)
+{
+	for (int i = rect.GetTopLeft().x; i < rect.GetBotoomRight().x; i++)
+	{
+		for (int j = rect.GetTopLeft().y; j < rect.GetBotoomRight().y; j++)
+		{
+			PutPixel(i, j, c);
+		}
+	}
+}
 //Dont work needs more knowloadge and mybe GDI+
 /*
 void Graphics::ScreenShot(std::string & filename)

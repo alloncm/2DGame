@@ -103,7 +103,7 @@ public:
 		}
 	}
 	RectI GetScreenRect()const;
-	void ScreenShot(std::string& filename);
+	//void ScreenShot(std::string& filename);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

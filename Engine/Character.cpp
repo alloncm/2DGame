@@ -52,19 +52,56 @@ void Character::Draw(Graphics & gfx)
 void Character::HandleInput(int dir, bool jump)
 {
 	//in the enum struct State all the states facing right are even while all the states facing left are odd
-	bool face = (int(iCurrent) % 2)!=0;		//false is Left true is Right
-	switch (dir)
+	bool face = (int(iCurrent) % 2)!=0;		//false is Right true is Left
+
+	if (this->velocity.y == 0)
 	{
-	case -1:
-		iCurrent = State::WalkLeft;
-		break;
-	case 1:
-		iCurrent = State::WalkRight;
-		break;
-	default:
-		iCurrent = State(int(face));
-		break;
+		switch (dir)
+		{
+		case -1:
+			iCurrent = State::WalkLeft;
+			break;
+		case 1:
+			iCurrent = State::WalkRight;
+			break;
+		default:
+			iCurrent = State(int(face));
+			break;
+		}
 	}
+	else if (this->velocity.y < 0)
+	{
+		switch (dir)
+		{
+		case -1:
+			iCurrent = State::JumpUpLeft;
+			break;
+		case 1:
+			iCurrent = State::JumpUpRight;
+			break;
+		default:
+			iCurrent = State(int(State::JumpUpRight) + face);
+			break;
+		}
+		
+	}
+	else if (this->velocity.y > 0)
+	{
+		switch (dir)
+		{
+		case -1:
+			iCurrent = State::JumpDownLeft;
+			break;
+		case 1:
+			iCurrent = State::JumpDownRight;
+			break;
+		default:
+			iCurrent = State(int(State::JumpDownRight) + face);
+			break;
+		}
+		
+	}
+	
 	if (jump)
 	{
 		velocity.y = -6;

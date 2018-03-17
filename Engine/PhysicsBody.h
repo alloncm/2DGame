@@ -25,7 +25,7 @@ public:
 	void AddFraction(float f, float g);
 	RectI GetRect()const;
 	bool Collision(PhysicsMat* mat);
-
+	Vec2_<float> GetSumForces();
 private:
 	void UpdateForces();
 };

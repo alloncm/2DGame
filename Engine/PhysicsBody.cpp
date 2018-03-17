@@ -89,6 +89,17 @@ bool PhysicsBody::Collision(PhysicsMat * mat)
 	return false;
 }
 
+Vec2_<float> PhysicsBody::GetSumForces()
+{
+	Vec2_<float> sumForces(0, 0);
+	for (Vec2_<float>& f : forces)
+	{
+		sumForces += f;
+	}
+	sumForces += eForces;
+	return sumForces;
+}
+
 void PhysicsBody::UpdateForces()
 {
 	Vec2_<float> sumForces(0, 0);

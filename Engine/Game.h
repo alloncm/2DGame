@@ -24,6 +24,7 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include"PhysicsMat.h"
+#include"Character.h"
 class Game
 {
 public:
@@ -43,5 +44,6 @@ private:
 	/********************************/
 	/*  User Variables              */
 	PhysicsMat Ground;
+	Character ch;
 	/********************************/
 };

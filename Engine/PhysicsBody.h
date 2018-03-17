@@ -1,3 +1,5 @@
+#pragma once
+
 #include"Vec2.h"
 #include"Graphics.h"
 #include<vector>
@@ -13,7 +15,7 @@ protected:
 	int height;
 	std::vector<Vec2_<float>>forces;		//forces which are being used only once like a punch or explosion or even jumping
 protected:
-	PhysicsBody(float mass, Vec2_<int>pos,int w,int h);
+	PhysicsBody(float mass, Vec2_<int>pos, int w, int h);
 public:
 	virtual void Draw(Graphics& gfx) = 0;
 	virtual void Update(float dt);

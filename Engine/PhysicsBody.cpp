@@ -17,7 +17,7 @@ void PhysicsBody::Update(float dt)
 	UpdateForces();
 
 	velocity = velocity + (acceleration*dt);
-	position += Vec2_<int>(velocity.x,velocity.y);
+	position += Vec2_<int>(int(velocity.x),int(velocity.y));
 }
 
 void PhysicsBody::AddConstantForce(Vec2_<float> force)

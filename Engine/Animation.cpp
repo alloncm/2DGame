@@ -45,7 +45,7 @@ void Animation::Update(float dt)
 	{
 		time = 0;
 		curFrame++;
-		if (curFrame >= frames.size())
+		if (curFrame >= int(frames.size()))
 		{
 			curFrame = 0;
 		}

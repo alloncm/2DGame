@@ -134,6 +134,8 @@ void Surface::ToMiror()
 	}
 }
 
+//not working and not even using
+/*
 void Surface::Save(std::string & filename)
 {
 	BITMAPINFOHEADER bmpi;
@@ -163,7 +165,7 @@ void Surface::Save(std::string & filename)
 	fout.write(reinterpret_cast<char*> (&bmpi), sizeof(bmpi));
 
 }
-
+*/
 
 
 

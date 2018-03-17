@@ -26,7 +26,8 @@ Game::Game(MainWindow& wnd)
 	wnd(wnd),
 	gfx(wnd),
 	Ground(Rect<float>(0, 550, 800, 50), 0.5, Colors::Green),
-	ch(2,{100,100},48,48,0.4)
+	ch(2,{100,100},48,48,0.1)
+	
 {
 }
 
@@ -40,10 +41,13 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	ch.Update(t.Tick());
 }
 
 void Game::ComposeFrame()
 {
 	Ground.Draw(gfx);
 	ch.Draw(gfx);
+	
+	
 }

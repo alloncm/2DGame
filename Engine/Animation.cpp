@@ -10,7 +10,7 @@ Animation::Animation(std::string s, float ht, int w, int h, Vec2_<int> start, Ve
 	time(0),
 	chroma(ch)
 {
-	for (int i = start.y; i < stop.y; i += h)
+	for (int i = start.y; i < stop.y+1; i += h)
 	{
 		for (int j = start.x; j < stop.x; j += w)
 		{

@@ -25,6 +25,7 @@
 #include "Graphics.h"
 #include"PhysicsMat.h"
 #include"Character.h"
+#include"Timer.h"
 class Game
 {
 public:
@@ -44,6 +45,7 @@ private:
 	/********************************/
 	/*  User Variables              */
 	PhysicsMat Ground;
+	Timer t;
 	Character ch;
 	/********************************/
 };

@@ -8,7 +8,6 @@ Character::Character(float mass, Vec2_<int> pos, int w, int h,float hd, float sp
 	iCurrent(State::IdleRight),
 	speed(spe)
 {
-	
 	std::string filename = "Jack48x48.bmp";
 	int x = 0 , y = 0;
 	int i;

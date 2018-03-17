@@ -75,7 +75,7 @@ bool PhysicsBody::Collision(PhysicsMat * mat)
 			velocity.y = 0;
 
 			//adjust the position of the body after hitting the material
-			if (matRect.GetTopLeft().y > this->position.y)
+			if (matRect.GetTopLeft().y > this->position.y)		//the body is on the mat
 			{
 				this->position.y = matRect.GetTopLeft().y - this->height;
 			}

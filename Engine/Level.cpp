@@ -23,7 +23,9 @@ void Level::Update(int dir, bool jump)
 	{
 		hero->AddForce(Vec2_<float>(0, -gravity));
 		onGround = true;
+		//make walking faster on the ground cause of the fraction
 	}
+
 	Input(dir, jump&&onGround);
 	float dt = timer.Tick();
 	hero->Update(dt);

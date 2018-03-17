@@ -66,7 +66,10 @@ void Character::HandleInput(int dir, bool jump)
 		iCurrent = State(int(face));
 		break;
 	}
-
+	if (jump)
+	{
+		velocity.y = -6;
+	}
 	//the force is awkward to control with
 	//AddForce(Vec2_<float>(dir*speed, 0));
 

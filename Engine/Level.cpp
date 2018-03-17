@@ -16,14 +16,15 @@ void Level::Draw(Graphics & gfx)
 	ground->Draw(gfx);
 }
 
-void Level::Update()
+void Level::Update(int dir, bool jump)
 {
-	if (ground->IsColiding(Cast(hero->GetRect())))
+	bool onGround = false;
+	if (hero->Collision(ground.get()))
 	{
 		hero->AddForce(Vec2_<float>(0, -gravity));
-		hero->AddFraction(ground->GetFraction(), gravity);
-		hero->Collision(ground.get());
+		onGround = true;
 	}
+	Input(dir, jump&&onGround);
 	float dt = timer.Tick();
 	hero->Update(dt);
 }

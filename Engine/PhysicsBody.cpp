@@ -49,10 +49,11 @@ RectI PhysicsBody::GetRect() const
 	return RectI(position.x,position.y,width,height);
 }
 
-void PhysicsBody::Collision(PhysicsMat * mat)
+bool PhysicsBody::Collision(PhysicsMat * mat)
 {
 	if (this->GetRect().IsColliding(mat->GetRect()))
 	{
+
 		RectI matRect = mat->GetRect();
 		if (matRect.GetTopLeft().y<(this->position.y-this->height)&&matRect.GetBotoomRight().y>this->position.y)
 		{
@@ -83,7 +84,9 @@ void PhysicsBody::Collision(PhysicsMat * mat)
 				this->position.y = matRect.GetBotoomRight().y;
 			}
 		}
+		return true;
 	}
+	return false;
 }
 
 void PhysicsBody::UpdateForces()

@@ -41,3 +41,13 @@ float PhysicsMat::GetFraction()
 {
 	return fraction;
 }
+
+const Vec2_<int>& PhysicsMat::GetPosition() const
+{
+	return Cast(this->rect.GetTopLeft());
+}
+
+RectI PhysicsMat::GetRect() const
+{
+	return Cast(rect);
+}

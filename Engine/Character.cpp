@@ -1,11 +1,12 @@
 #include "Character.h"
 
-Character::Character(float mass, Vec2_<int> pos, int w, int h,float hd)
+Character::Character(float mass, Vec2_<int> pos, int w, int h,float hd, float spe)
 	:
 	PhysicsBody(mass,pos,w,h),
 	sprite(SpriteManager::GetManager().Get("Jack48x48.bmp")),
 	holdTime(hd),
-	iCurrent(State::JumpDownLeft)
+	iCurrent(State::IdleRight),
+	speed(spe)
 {
 	
 	std::string filename = "Jack48x48.bmp";
@@ -40,10 +41,30 @@ Character::Character(float mass, Vec2_<int> pos, int w, int h,float hd)
 
 void Character::Update(float dt)
 {
+	PhysicsBody::Update(dt);
 	animations[int(iCurrent)].Update(dt);
 }
 
 void Character::Draw(Graphics & gfx)
 {
 	animations[int(iCurrent)].Draw(this->position,gfx);
+}
+
+void Character::HandleInput(int dir, bool jump)
+{
+	//in the enum struct State all the states facing right are even while all the states facing left are odd
+	bool face = (int(iCurrent) % 2)!=0;		//false is Left true is Right
+	switch (dir)
+	{
+	case -1:
+		iCurrent = State::WalkLeft;
+		break;
+	case 1:
+		iCurrent = State::WalkRight;
+		break;
+	default:
+		iCurrent = State(int(face));
+		break;
+	}
+	AddForce(Vec2_<float>(dir*speed, 0));
 }

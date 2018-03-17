@@ -3,6 +3,7 @@
 #include"Vec2.h"
 #include"Graphics.h"
 #include<vector>
+#include"PhysicsMat.h"
 class PhysicsBody
 {
 protected:
@@ -21,6 +22,10 @@ public:
 	virtual void Update(float dt);
 	void AddConstantForce(Vec2_<float> force);
 	void AddForce(Vec2_<float> force);
+	void AddFraction(float f, float g);
+	RectI GetRect()const;
+	void Collision(PhysicsMat* mat);
+
 private:
 	void UpdateForces();
 };

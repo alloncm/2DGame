@@ -19,5 +19,7 @@ public:
 	bool IsColiding(Rect<float> obj);
 	virtual void Draw(Graphics& gfx);
 	float GetFraction();
+	const Vec2_<int>& GetPosition()const;
+	RectI GetRect()const;
 	virtual ~PhysicsMat() = default;
 };

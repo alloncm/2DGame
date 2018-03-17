@@ -25,9 +25,9 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	Ground(Rect<float>(0, 550, 800, 50), 0.5, Colors::Green),
-	ch(2,{100,100},48,48,0.1)
-	
+	Ground(Rect<float>(0, 550, 400, 50), 0.2, Colors::Green),
+	ch(2,{100,100},48,48,0.1,10),
+	level(std::move(ch),std::move(Ground),10)
 {
 }
 
@@ -41,13 +41,26 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	ch.Update(t.Tick());
+	
+	int input = 0;
+	if (wnd.kbd.KeyIsPressed(VK_LEFT)&& wnd.kbd.KeyIsPressed(VK_RIGHT))
+	{
+		input = 0;
+	}
+	else if (wnd.kbd.KeyIsPressed(VK_LEFT))
+	{
+		input = -1;
+	}
+	else if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+	{
+		input = 1;
+	}
+	level.Input(input, false);
+	level.Update();
+	
 }
 
 void Game::ComposeFrame()
 {
-	Ground.Draw(gfx);
-	ch.Draw(gfx);
-	
-	
+	level.Draw(gfx);
 }

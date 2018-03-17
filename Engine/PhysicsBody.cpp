@@ -30,6 +30,62 @@ void PhysicsBody::AddForce(Vec2_<float> force)
 	forces.emplace_back(force);
 }
 
+void PhysicsBody::AddFraction(float f,float g)
+{
+	Vec2_<float> force(0,0);
+	if (velocity.x != 0)
+	{
+		force.x = f*-g*mass;			//its already negatice cause gravity is negative
+		if (velocity.x < 0)			//if he walks left make the force positive
+		{
+			force.x *= -1;
+		}
+	}
+	AddForce(force);
+}
+
+RectI PhysicsBody::GetRect() const
+{
+	return RectI(position.x,position.y,width,height);
+}
+
+void PhysicsBody::Collision(PhysicsMat * mat)
+{
+	if (this->GetRect().IsColliding(mat->GetRect()))
+	{
+		RectI matRect = mat->GetRect();
+		if (matRect.GetTopLeft().y<(this->position.y-this->height)&&matRect.GetBotoomRight().y>this->position.y)
+		{
+			velocity.x = 0;
+
+			//adjust the position of the body after hitting the material
+			//check this piece of code
+			if (matRect.GetTopLeft().x > this->position.x)
+			{
+				this->position.x = matRect.GetTopLeft().x + this->width;
+			}
+			else if (matRect.GetBotoomRight().x < this->position.x)
+			{
+				this->position.x = matRect.GetBotoomRight().x;
+			}
+		}
+		else
+		{
+			velocity.y = 0;
+
+			//adjust the position of the body after hitting the material
+			if (matRect.GetTopLeft().y > this->position.y)
+			{
+				this->position.y = matRect.GetTopLeft().y - this->height;
+			}
+			else if (matRect.GetBotoomRight().y < this->position.y)
+			{
+				this->position.y = matRect.GetBotoomRight().y;
+			}
+		}
+	}
+}
+
 void PhysicsBody::UpdateForces()
 {
 	Vec2_<float> sumForces(0, 0);

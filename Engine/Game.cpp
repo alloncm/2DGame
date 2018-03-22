@@ -25,8 +25,8 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	Ground(Rect<float>(0, 550, 400, 50), 0.2, Colors::Green),
-	ch(2,{100,100},48,48,0.1,3),
+	Ground(Rect<float>(0, 550, 800, 50), 0.2, Colors::Green),
+	ch(2,{100,100},48,48,0.1,2),
 	level(std::move(ch),std::move(Ground),30)
 {
 }
@@ -60,7 +60,13 @@ void Game::UpdateModel()
 	{
 		jump = true;
 	}
-	level.Update(input, jump);
+	bool attack = false;
+	auto eve = wnd.kbd.ReadKey();
+	if (eve.GetCode()==VK_SPACE&&eve.IsPress())
+	{
+		attack = true;
+	}
+	level.Update(input, jump,attack);
 	
 }
 

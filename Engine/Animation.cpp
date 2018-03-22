@@ -62,3 +62,19 @@ void Animation::Draw(Vec2_<int> pos,Graphics & gfx)
 		}
 	});
 }
+
+bool Animation::FinishedCycle()
+{
+	if (curFrame == frames.size()-1)
+	{
+		return true;
+	}
+	return false;
+}
+
+void Animation::ResetCycle()
+{
+	curFrame = 0;
+}
+
+

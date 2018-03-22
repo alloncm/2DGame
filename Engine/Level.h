@@ -13,6 +13,6 @@ protected:
 public:
 	Level(Character&& h,PhysicsMat&& g,float gra);
 	void Draw(Graphics& gfx);
-	void Update(int dir, bool jump);
-	void Input(int dir,bool jump);
+	void Update(int dir, bool jump,bool attack);
+	void Input(int dir,bool jump,bool attack);
 };

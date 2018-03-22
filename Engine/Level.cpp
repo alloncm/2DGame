@@ -16,7 +16,7 @@ void Level::Draw(Graphics & gfx)
 	ground->Draw(gfx);
 }
 
-void Level::Update(int dir, bool jump)
+void Level::Update(int dir, bool jump,bool attack)
 {
 	bool onGround = false;
 	if (hero->Collision(ground.get()))
@@ -26,13 +26,13 @@ void Level::Update(int dir, bool jump)
 		//make walking faster on the ground cause of the fraction
 	}
 
-	Input(dir, jump&&onGround);
+	Input(dir, jump&&onGround,attack);
 	float dt = timer.Tick();
 	hero->Update(dt);
 }
 
-void Level::Input(int dir, bool jump)
+void Level::Input(int dir, bool jump,bool attack)
 {
-	hero->HandleInput(dir, jump);
+	hero->HandleInput(dir, jump,attack);
 }
 

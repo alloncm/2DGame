@@ -11,6 +11,8 @@ public:
 	Animation(std::string source, float HoldTime, int width, int height, Color ch);
 	void Update(float dt);
 	void Draw(Vec2_<int> pos, Graphics& gfx);
+	bool FinishedCycle();
+	void ResetCycle();
 private:
 	Color chroma;
 	Surface* source;

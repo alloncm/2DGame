@@ -23,7 +23,7 @@ public:
 	void AddConstantForce(Vec2_<float> force);
 	void AddForce(Vec2_<float> force);
 	void AddFraction(float f, float g);
-	RectI GetRect()const;
+	virtual RectI GetRect()const;
 	bool Collision(PhysicsMat* mat);
 	Vec2_<float> GetSumForces();
 private:

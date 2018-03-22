@@ -54,6 +54,16 @@ public:
 	{
 		return this->bRight;
 	}
+
+	void SetTopLeft(const Vec2_<T>& v)
+	{
+		this->tLeft = v;
+	}
+
+	void SetBottomRight(const Vec2_<T>& v)
+	{
+		this->bRight = v;
+	}
 	bool IsInside(const Vec2_<T>& l)const
 	//not working as intend 
 	//needs to fix
@@ -85,6 +95,16 @@ public:
 		return false;
 	}
 
+	Rect<T> operator-(Rect<T> rect)
+	{
+		return Rect<T>(this->tLeft - rect.tLeft, this->bRight - rect.bRight);
+	}
+	Rect<T>& operator-=(Rect<T> rect)
+	{
+		this->tLeft -= rect.tLeft;
+		this->bRight -= rect.bRight;
+		return *this;
+	}
 	
 	static Rect<int> GetRectI(Vec2_<T> v1, Vec2_<T> v2)
 	{

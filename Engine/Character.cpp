@@ -136,3 +136,13 @@ void Character::HandleInput(int dir, bool jump,bool attack)
 
 	velocity.x = dir*speed;
 }
+
+RectI Character::GetRect() const
+{
+	auto toRemove = animations[int(iCurrent)].GetRectToRemove();
+	auto rect = PhysicsBody::GetRect();
+
+	rect.SetTopLeft(rect.GetTopLeft() + toRemove.GetTopLeft());
+	rect.SetBottomRight(rect.GetBotoomRight() - toRemove.GetBotoomRight());
+	return rect;
+}

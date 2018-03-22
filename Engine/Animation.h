@@ -13,6 +13,7 @@ public:
 	void Draw(Vec2_<int> pos, Graphics& gfx);
 	bool FinishedCycle();
 	void ResetCycle();
+	RectI GetRectToRemove() const;
 private:
 	Color chroma;
 	Surface* source;

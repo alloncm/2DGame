@@ -77,4 +77,78 @@ void Animation::ResetCycle()
 	curFrame = 0;
 }
 
+RectI Animation::GetRectToRemove()const
+{
+	RectI originRect = this->frames[this->curFrame];
+
+	int top = 0, left = 0, bottom = 0, right = 0;
+
+	bool found = false;				//terminating the for loops if found
+	
+	//left
+	for (int i = 0; i < originRect.GetWidth()&&!found; i++)
+	{
+		for (int j = 0; j < originRect.GetHeight()&&!found; j++)
+		{
+			if (this->source->GetPixel(originRect.GetTopLeft().x + i, originRect.GetTopLeft().y + j)!=this->chroma)
+			{
+				found = true;
+				left = i;
+			}
+		}
+	}
+
+	//top
+	found = false;
+
+	for (int j = 0; j < originRect.GetHeight() && !found; j++)
+	{
+		for (int i = 0; i < originRect.GetWidth() && !found; i++)
+		{
+			if (this->source->GetPixel(originRect.GetTopLeft().x + i, originRect.GetTopLeft().y + j) != this->chroma)
+			{
+				found = true;
+				top = j;
+			}
+		}
+	}
+
+	//right
+	found = false;
+
+	for (int i = 0; i < originRect.GetWidth() && !found; i++)
+	{
+		for (int j = 0; j < originRect.GetHeight() && !found; j++)
+		{
+			if (this->source->GetPixel(originRect.GetBotoomRight().x - 1 - i, originRect.GetBotoomRight().y - 1 - j) != this->chroma)
+			{
+				found = true;
+				right = i;
+			}
+		}
+	}
+
+	if (!found)
+	{
+
+	}
+
+	//bottom
+	found = false;
+
+	for (int j = 0; j < originRect.GetHeight() && !found; j++)
+	{
+		for (int i = 0; i < originRect.GetWidth() && !found; i++)
+		{
+			if (this->source->GetPixel(originRect.GetBotoomRight().x - 1 - i, originRect.GetBotoomRight().y - 1 - j) != this->chroma)
+			{
+				found = true;
+				bottom = j;
+			}
+		}
+	}
+
+	return RectI(Vec2_<int>(left, top), Vec2_<int>(right, bottom));
+}
+
 

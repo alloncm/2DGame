@@ -32,5 +32,6 @@ public:
 	virtual void Update(float dt)override;
 	virtual void Draw(Graphics& gfx)override;
 	void HandleInput(int dir, bool jump,bool attack);							// dir: 0 not moving 1 right -1 left
+	virtual RectI GetRect()const override;
 	virtual ~Character()=default;
 };

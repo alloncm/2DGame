@@ -134,9 +134,23 @@ void Surface::ToMiror()
 	}
 }
 
-Surface & Surface::CutRect(Rect<int> r) const
+Surface Surface::CutRect(Rect<int> r)const 
 {
-
+	if (r.GetWidth() > this->width||r.GetHeight()>this->height)
+	{
+		return *this;
+	}
+	std::vector<Color> newPixels;
+	for (int j = r.GetTopLeft().y; j < r.GetBotoomRight().y; j++)
+	{
+		for (int i = r.GetTopLeft().x; i < r.GetBotoomRight().x; i++)
+		{
+			newPixels.emplace_back(pixels[j*this->width + i]);
+		}
+	}
+	Surface s (r.GetWidth(),r.GetHeight());
+	s.pixels = newPixels;
+	return s;
 }
 
 //not working and not even using

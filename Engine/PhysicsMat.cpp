@@ -1,10 +1,26 @@
 #include "PhysicsMat.h"
 
-PhysicsMat::PhysicsMat(Rect<float> r, float f, std::string  filename)
+
+
+
+PhysicsMat::PhysicsMat(Rect<float> r, float f, std::string filename, Color ch)
 	:
 	rect(r),
 	fraction(f),
-	texture(SpriteManager::GetManager().Get(filename))
+	texture((SpriteManager::GetManager().Get(filename))),
+	chroma(ch),
+	drawRect(texture->GetRect())
+{
+	color = 0;
+}
+
+PhysicsMat::PhysicsMat(Rect<float> r, float f, std::string filename, Rect<int> toUse, Color ch )
+	:
+	rect(r),
+	fraction(f),
+	texture(SpriteManager::GetManager().Get(filename)),
+	chroma(ch),
+	drawRect(toUse)
 {
 	color = 0;
 }
@@ -13,7 +29,8 @@ PhysicsMat::PhysicsMat(Rect<float> r, float f, Color c)
 	:
 	rect(r),
 	fraction(f),
-	color(c)
+	color(c),
+	drawRect(0,0,0,0)
 {
 	texture = nullptr;
 }
@@ -25,10 +42,14 @@ bool PhysicsMat::IsColiding(Rect<float> obj)
 
 void PhysicsMat::Draw(Graphics & gfx)
 {
-	if (this->texture != nullptr)
+	if (texture != nullptr)
 	{
-		gfx.DrawSprite(rect.GetTopLeft().x,rect.GetTopLeft().y,*texture,[](Color c,int x,int y,Graphics& gfx){
-			gfx.PutPixel(x, y, c);
+		gfx.DrawSprite(rect.GetTopLeft().x, rect.GetTopLeft().y,drawRect, *texture, [this](Color c, int x, int y, Graphics& gfx) 
+		{
+			if (c != chroma)
+			{
+				gfx.PutPixel(x, y, c);
+			}
 		});
 	}
 	else

@@ -123,6 +123,7 @@ void Character::HandleInput(int dir, bool jump,bool attack)
 		{
 			iCurrent = State(int(State::AttackRight) + face);
 			attacking = true;
+			//reseting the cycle of the animation to make sure the attacking is being completed
 			animations[int(iCurrent)].ResetCycle();
 		}
 	}
@@ -139,9 +140,12 @@ void Character::HandleInput(int dir, bool jump,bool attack)
 
 RectI Character::GetRect() const
 {
+	//gets the leftovers in the sides of the frames
 	auto toRemove = animations[int(iCurrent)].GetRectToRemove();
+	//gets the original rect
 	auto rect = PhysicsBody::GetRect();
 
+	//remove the leftovers
 	rect.SetTopLeft(rect.GetTopLeft() + toRemove.GetTopLeft());
 	rect.SetBottomRight(rect.GetBotoomRight() - toRemove.GetBotoomRight());
 	return rect;

@@ -23,6 +23,7 @@ public:
 	void Fill(Color c);
 	RectI GetRect()const;
 	void ToMiror();
+	Surface& CutRect(Rect<int> r)const;
 	void Save(std::string& filename );
 private:
 	int width;

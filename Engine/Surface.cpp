@@ -134,6 +134,11 @@ void Surface::ToMiror()
 	}
 }
 
+Surface & Surface::CutRect(Rect<int> r) const
+{
+
+}
+
 //not working and not even using
 /*
 void Surface::Save(std::string & filename)

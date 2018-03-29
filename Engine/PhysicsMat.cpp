@@ -1,6 +1,6 @@
 #include "PhysicsMat.h"
 
-PhysicsMat::PhysicsMat(Rect<float> r, float f, std::string & filename)
+PhysicsMat::PhysicsMat(Rect<float> r, float f, std::string  filename)
 	:
 	rect(r),
 	fraction(f),

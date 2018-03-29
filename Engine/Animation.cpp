@@ -78,6 +78,7 @@ void Animation::ResetCycle()
 }
 
 RectI Animation::GetRectToRemove()const
+//gets the leftovers the sides and returns a rect containing all those leftovers to be removed later or gets ignored
 {
 	RectI originRect = this->frames[this->curFrame];
 

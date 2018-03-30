@@ -1,5 +1,5 @@
 #include "Animation.h"
-
+#include<algorithm>
 Animation::Animation(std::string s, float ht, int w, int h, Vec2_<int> start, Vec2_<int>stop,Color ch)
 	:
 	source(SpriteManager::GetManager().Get(s)),
@@ -10,13 +10,20 @@ Animation::Animation(std::string s, float ht, int w, int h, Vec2_<int> start, Ve
 	time(0),
 	chroma(ch)
 {
+	int top = 0, left = 0, bottom = 0, right = 0;
 	for (int i = start.y; i < stop.y+1; i += h)
 	{
 		for (int j = start.x; j < stop.x; j += w)
 		{
 			frames.emplace_back(RectI( j,i,w,h ));
+			auto rect = this->GetRectToRemove(RectI(j, i, w, h));
+			top = max(rect.GetTopLeft().y,top);
+			left = max(rect.GetTopLeft().x, left);
+			bottom = max(rect.GetBotoomRight().y, bottom);
+			right = max(rect.GetBotoomRight().x, right);
 		}
 	}
+	rectToDel = RectI(Vec2_<int>(left, top), Vec2_<int>(right, bottom));
 }
 
 Animation::Animation(std::string s, float ht, int w, int h, Color ch)
@@ -29,13 +36,20 @@ Animation::Animation(std::string s, float ht, int w, int h, Color ch)
 	time(0),
 	chroma(ch)
 {
+	int top = 0, left = 0, bottom = 0, right = 0;
 	for (int i = 0; i < source->GetHeight(); i += h)
 	{
 		for (int j = 0; j < source->GetWidth(); j += w)
 		{
 			frames.emplace_back(RectI(j, i, w, h));
+			auto rect = this->GetRectToRemove(RectI(j, i, w, h));
+			top = max(rect.GetTopLeft().y, top);
+			left = max(rect.GetTopLeft().x, left);
+			bottom = max(rect.GetBotoomRight().y, bottom);
+			right = max(rect.GetBotoomRight().x, right);
 		}
 	}
+	rectToDel = RectI(Vec2_<int>(left, top), Vec2_<int>(right, bottom));
 }
 
 void Animation::Update(float dt)
@@ -77,10 +91,15 @@ void Animation::ResetCycle()
 	curFrame = 0;
 }
 
-RectI Animation::GetRectToRemove()const
+Rect<int> Animation::GetRectToDel() const
+{
+	return this->rectToDel;
+}
+
+RectI Animation::GetRectToRemove(Rect<int> originRect)const
 //gets the leftovers the sides and returns a rect containing all those leftovers to be removed later or gets ignored
 {
-	RectI originRect = this->frames[this->curFrame];
+	//RectI originRect = this->frames[this->curFrame];
 
 	int top = 0, left = 0, bottom = 0, right = 0;
 

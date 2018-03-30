@@ -4,6 +4,7 @@
 #include<vector>
 #include"Vec2.h"
 #include"Graphics.h"
+#include<algorithm>
 class Animation
 {
 public:
@@ -13,7 +14,9 @@ public:
 	void Draw(Vec2_<int> pos, Graphics& gfx);
 	bool FinishedCycle();
 	void ResetCycle();
-	RectI GetRectToRemove() const;
+	Rect<int> GetRectToDel()const;
+private:
+	RectI GetRectToRemove(Rect<int> origin) const;
 private:
 	Color chroma;
 	Surface* source;
@@ -23,4 +26,5 @@ private:
 	float time;
 	int width;
 	int height;
+	Rect<int> rectToDel;
 };

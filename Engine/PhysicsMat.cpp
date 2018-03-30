@@ -1,8 +1,6 @@
 #include "PhysicsMat.h"
 
 
-
-
 PhysicsMat::PhysicsMat(Rect<float> r, float f, std::string filename, Color ch)
 	:
 	rect(r),

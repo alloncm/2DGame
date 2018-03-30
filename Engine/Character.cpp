@@ -141,7 +141,7 @@ void Character::HandleInput(int dir, bool jump,bool attack)
 RectI Character::GetRect() const
 {
 	//gets the leftovers in the sides of the frames
-	auto toRemove = animations[int(iCurrent)].GetRectToRemove();
+	auto toRemove = animations[int(iCurrent)].GetRectToDel();
 	//gets the original rect
 	auto rect = PhysicsBody::GetRect();
 

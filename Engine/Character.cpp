@@ -12,11 +12,17 @@ Character::Character(float mass, Vec2_<int> pos, int w, int h,float hd, float sp
 	std::string filename = "busterComplete.bmp";
 	int x = 0 , y = 0;
 	int i;
+	int top = 0, left = 0, bottom = 0, right = 0;
 	//idle
 	for ( i = 0; i < int(State::WalkRight); i++)
 	{
 		animations.emplace_back(Animation(filename, holdTime, this->width, this->height,Vec2_<int>(x,y), Vec2_<int>(x+(3*this->width), y), Colors::Magenta));
 		x += 3 * this->width;
+		auto rect = animations[animations.size() - 1].GetRectToDel();
+		top = max(rect.GetTopLeft().y, top);
+		left = max(rect.GetTopLeft().x, left);
+		bottom = max(rect.GetBotoomRight().y, bottom);
+		right = max(rect.GetBotoomRight().x, right);
 	}
 	y += this->height;
 	x = 0;
@@ -25,6 +31,11 @@ Character::Character(float mass, Vec2_<int> pos, int w, int h,float hd, float sp
 	{
 		animations.emplace_back(Animation(filename, holdTime, this->width, this->height, Vec2_<int>(x, y), Vec2_<int>(x + (6* this->width), y), Colors::Magenta));
 		y += this->height;
+		auto rect = animations[animations.size() - 1].GetRectToDel();
+		top = max(rect.GetTopLeft().y, top);
+		left = max(rect.GetTopLeft().x, left);
+		bottom = max(rect.GetBotoomRight().y, bottom);
+		right = max(rect.GetBotoomRight().x, right);
 	}
 	x = 0;
 	//jump
@@ -32,9 +43,19 @@ Character::Character(float mass, Vec2_<int> pos, int w, int h,float hd, float sp
 	{
 		animations.emplace_back(Animation(filename, holdTime, this->width, this->height, Vec2_<int>(x, y), Vec2_<int>(x + (3 * this->width), y), Colors::Magenta));
 		x += 3 * this->width;
+		auto rect = animations[animations.size() - 1].GetRectToDel();
+		top = max(rect.GetTopLeft().y, top);
+		left = max(rect.GetTopLeft().x, left);
+		bottom = max(rect.GetBotoomRight().y, bottom);
+		right = max(rect.GetBotoomRight().x, right);
 		animations.emplace_back(Animation(filename, holdTime, this->width, this->height, Vec2_<int>(x, y), Vec2_<int>(x + (3 * this->width), y), Colors::Magenta));
 		x = 0;
 		y += this->height;
+		rect = animations[animations.size() - 1].GetRectToDel();
+		top = max(rect.GetTopLeft().y, top);
+		left = max(rect.GetTopLeft().x, left);
+		bottom = max(rect.GetBotoomRight().y, bottom);
+		right = max(rect.GetBotoomRight().x, right);
 	}
 
 	//attack
@@ -43,9 +64,19 @@ Character::Character(float mass, Vec2_<int> pos, int w, int h,float hd, float sp
 		animations.emplace_back(Animation(filename, holdTime, this->width, this->height, Vec2_<int>(x, y), Vec2_<int>(4 * this->width, y), Colors::Magenta));
 		x = 0;
 		y += this->height;
+		auto rect = animations[animations.size() - 1].GetRectToDel();
+		top = max(rect.GetTopLeft().y, top);
+		left = max(rect.GetTopLeft().x, left);
+		bottom = max(rect.GetBotoomRight().y, bottom);
+		right = max(rect.GetBotoomRight().x, right);
 		animations.emplace_back(Animation(filename, holdTime, this->width, this->height, Vec2_<int>(x, y), Vec2_<int>(4 * this->width, y), Colors::Magenta));
+		rect = animations[animations.size() - 1].GetRectToDel();
+		top = max(rect.GetTopLeft().y, top);
+		left = max(rect.GetTopLeft().x, left);
+		bottom = max(rect.GetBotoomRight().y, bottom);
+		right = max(rect.GetBotoomRight().x, right);
 	}
-	
+	auto toRemove =  RectI(Vec2_<int>(left, top), Vec2_<int>(right, bottom));
 }
 
 void Character::Update(float dt)
@@ -140,8 +171,6 @@ void Character::HandleInput(int dir, bool jump,bool attack)
 
 RectI Character::GetRect() const
 {
-	//gets the leftovers in the sides of the frames
-	auto toRemove = animations[int(iCurrent)].GetRectToDel();
 	//gets the original rect
 	auto rect = PhysicsBody::GetRect();
 

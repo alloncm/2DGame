@@ -51,10 +51,10 @@ RectI PhysicsBody::GetRect() const
 
 bool PhysicsBody::Collision(PhysicsMat * mat)
 {
-	if (this->GetRect().IsColliding(mat->GetRect()))
+	RectI matRect = mat->GetRect();
+	//needs to check only the standing animation rect and not the falling animation for example
+	if (this->GetRect().IsColliding(matRect))
 	{
-
-		RectI matRect = mat->GetRect();
 		if (matRect.GetTopLeft().y<(this->position.y-this->height)&&matRect.GetBotoomRight().y>this->position.y)
 		{
 			velocity.x = 0;

@@ -27,6 +27,7 @@ protected:
 	State iCurrent;
 	float speed;
 	bool attacking;
+	Rect<int> toRemove;
 public:
 	Character(float mass, Vec2_<int>pos, int w, int h,float hd, float spe);
 	virtual void Update(float dt)override;

@@ -100,6 +100,11 @@ Vec2_<float> PhysicsBody::GetSumForces()
 	return sumForces;
 }
 
+void PhysicsBody::SetPosition(Vec2_<int> pos)
+{
+	this->position = pos;
+}
+
 void PhysicsBody::UpdateForces()
 {
 	Vec2_<float> sumForces(0, 0);

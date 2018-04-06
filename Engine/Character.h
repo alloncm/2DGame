@@ -28,6 +28,11 @@ protected:
 	float speed;
 	bool attacking;
 	Rect<int> toRemove;
+	/*
+	might need to add a vector to store all the rects
+	of the moves of the character cause the rect when
+	attacking is differnt than the one walking or moving or falling. 
+	*/
 public:
 	Character(float mass, Vec2_<int>pos, int w, int h,float hd, float spe);
 	virtual void Update(float dt)override;

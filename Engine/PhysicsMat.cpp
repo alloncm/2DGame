@@ -70,3 +70,9 @@ RectI PhysicsMat::GetRect() const
 {
 	return Cast(rect);
 }
+
+void PhysicsMat::SetPosition(Vec2_<int> pos)
+{
+	Rect<int> r(pos.x, pos.y, this->rect.GetWidth(), this->rect.GetHeight());
+	this->rect = Cast(r);
+}

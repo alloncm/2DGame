@@ -76,7 +76,7 @@ Character::Character(float mass, Vec2_<int> pos, int w, int h,float hd, float sp
 		bottom = max(rect.GetBotoomRight().y, bottom);
 		right = max(rect.GetBotoomRight().x, right);
 	}
-	auto toRemove =  RectI(Vec2_<int>(left, top), Vec2_<int>(right, bottom));
+	toRemove =  RectI(Vec2_<int>(left, top), Vec2_<int>(right, bottom));
 }
 
 void Character::Update(float dt)

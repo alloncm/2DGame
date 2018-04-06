@@ -67,7 +67,11 @@ void Game::UpdateModel()
 		attack = true;
 	}
 	level.Update(input, jump,attack);
-	
+	std::ofstream fout("binfile.bin", std::ios::out|std::ios::binary);
+	int i = (42);
+	fout.write(reinterpret_cast<const char*>(&i), sizeof(int));
+	fout.close();
+	//level.GenerateFromFile("binfile.bin");
 }
 
 void Game::ComposeFrame()

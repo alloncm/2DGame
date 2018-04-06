@@ -24,5 +24,6 @@ public:
 	float GetFraction();
 	const Vec2_<int>& GetPosition()const;
 	RectI GetRect()const;
+	void SetPosition(Vec2_<int> pos);
 	virtual ~PhysicsMat()=default;
 };

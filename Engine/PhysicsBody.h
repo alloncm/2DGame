@@ -26,6 +26,8 @@ public:
 	virtual RectI GetRect()const;
 	bool Collision(PhysicsMat* mat);
 	Vec2_<float> GetSumForces();
+	void SetPosition(Vec2_<int> pos);
+	virtual ~PhysicsBody() = default;
 private:
 	void UpdateForces();
 };

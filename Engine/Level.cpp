@@ -1,3 +1,4 @@
+
 #include "Level.h"
 
 Level::Level(Character&& h, PhysicsMat&& g,float gra)
@@ -8,7 +9,16 @@ Level::Level(Character&& h, PhysicsMat&& g,float gra)
 	ground.emplace_back(samples[4]);
 
 	hero->AddConstantForce(Vec2_<float>(0, gravity));
+
+	std::ofstream fout ("binfile.lvl", std::ios::binary);
+	int a = 0, b = 0, c = 0;
+	fout.write(reinterpret_cast<char* > (&a), sizeof(int));
+	fout.write(reinterpret_cast<char* >(&b), sizeof(int));
+	fout.write(reinterpret_cast<char* >(&c), sizeof(int));
+
 }
+
+
 
 void Level::Draw(Graphics & gfx)
 {

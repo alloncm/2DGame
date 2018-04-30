@@ -24,8 +24,13 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	level()
 {
+	
+	PhysicsMat mat = samples[0];
+	mat.SetPosition(Vec2_<int>(100, 100));
+	level.Add(mat);
 }
 
 void Game::Go()
@@ -38,8 +43,38 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	auto input = wnd.kbd.ReadKey();
+	
+	if (input.IsPress())
+	{
+		unsigned char val = input.GetCode(); 
+		val -= '1';
+		if (val >= 0 && val <= 5)
+		{
+			 mat = new PhysicsMat( samples[val]);
+		}
+	}
+	if (mat != nullptr)
+	{
+		if (!wnd.mouse.LeftIsPressed())
+		{
+			mat->SetPosition(Vec2_<int>(wnd.mouse.GetPosX(), wnd.mouse.GetPosY()));
+		}
+		else
+		{
+			level.Add(*mat);
+			delete mat;
+			mat = nullptr;
+		}
+	}
+
 }
 
 void Game::ComposeFrame()
 {
+	level.Draw(gfx);
+	if (mat != nullptr)
+	{
+		mat->Draw(gfx);
+	}
 }

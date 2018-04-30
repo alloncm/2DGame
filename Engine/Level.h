@@ -16,6 +16,13 @@ public:
 		LeftCotnerTile,
 		Hero
 	};
+
+	struct LevelObject
+	{
+		Object obj;
+		Vec2_<int> position;
+	};
+public:
 	std::vector<PhysicsMat> samples
 	{
 		PhysicsMat(Rect<float>(50, 550, 64, 32), 0.2, "busterTiles.bmp", Rect<int>(0,0,64,32)),

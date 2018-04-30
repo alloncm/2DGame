@@ -24,7 +24,6 @@ public:
 	RectI GetRect()const;
 	void ToMiror();
 	Surface CutRect(Rect<int> r)const;
-	bool operator==(const Surface& s);
 	//void Save(std::string& filename );
 private:
 	int width;

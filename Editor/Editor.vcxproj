@@ -136,6 +136,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Engine\PhysicsMat.h" />
+    <ClInclude Include="..\Engine\Rect.h" />
+    <ClInclude Include="..\Engine\SpritesManager.h" />
+    <ClInclude Include="..\Engine\Surface.h" />
+    <ClInclude Include="..\Engine\Vec2.h" />
     <ClInclude Include="ChiliException.h" />
     <ClInclude Include="ChiliWin.h" />
     <ClInclude Include="Colors.h" />
@@ -143,15 +148,22 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="EditorLevel.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Engine\PhysicsMat.cpp" />
+    <ClCompile Include="..\Engine\Rect.cpp" />
+    <ClCompile Include="..\Engine\SpritesManager.cpp" />
+    <ClCompile Include="..\Engine\Surface.cpp" />
+    <ClCompile Include="..\Engine\Vec2.cpp" />
     <ClCompile Include="DXErr.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="EditorLevel.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Mouse.cpp" />

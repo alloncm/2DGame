@@ -186,20 +186,5 @@ void Surface::Save(std::string & filename)
 }
 */
 
-bool Surface::operator==(const Surface& s)
-{
-	if (height != s.height || width != s.width)
-	{
-		return false;
-	}
 
-	for (int i = 0; i < height*width; i++)
-	{
-		if (pixels[i] != s.pixels[i])
-		{
-			return false;
-		}
-	}
-	return true;
-}
 

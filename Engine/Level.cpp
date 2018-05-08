@@ -66,27 +66,27 @@ void Level::GenerateFromFile(std::string filename)
 	}
 	int size = fin.tellg();
 	fin.seekg(0, std::ios::beg);
-
-	int obj=0;
-	int x = 0;
-	int y = 0;
 	
-	while (fin.tellg()<size)
+	if (fin.tellg() % sizeof(Object) != 0)
 	{
-		fin.read(reinterpret_cast<char*>(&obj), sizeof(int));
-		fin.read(reinterpret_cast<char*>(&x), sizeof(int));
-		fin.read(reinterpret_cast<char*>(&y), sizeof(int));
+		std::string msg = "the file " + filename + " is corrupted\n";
+		throw std::exception(msg.c_str());
+	}
+	Object temp;
+	for(int i=0;i<size;i+=sizeof(Object))
+	{
+		fin.read(reinterpret_cast<char*>(&temp), sizeof(temp));
 
-		switch (obj)
+		switch (temp.type)
 		{
-		case(int(Object::Hero)):
-			hero->SetPosition(Vec2_<int>(x, y));
+		case(Type::Hero):
+			hero->SetPosition(temp.position);
 			break;
 		default:
-			if (obj <= int(Object::LeftCotnerTile) && obj >= 0)
+			if (temp.type <= (Type::LeftCotnerTile) && temp.type >= Type(0))
 			{
-				ground.emplace_back(samples[int(Object::Tile)]);
-				ground[ground.size() - 1].SetPosition(Vec2_<int>(x, y));
+				ground.emplace_back(samples[int(Type::Tile)]);
+				ground[ground.size() - 1].SetPosition(temp.position);
 			}
 			break;
 		}

@@ -7,7 +7,7 @@
 class Level
 {
 public:
-	enum class Object
+	enum class Type
 	{
 		Tile,
 		RightTile,
@@ -17,9 +17,10 @@ public:
 		Hero
 	};
 
-	struct LevelObject
+	struct Object
 	{
-		Object obj;
+		Type type;
+		PhysicsMat* mat;
 		Vec2_<int> position;
 	};
 public:

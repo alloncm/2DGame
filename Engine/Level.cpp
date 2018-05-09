@@ -67,7 +67,7 @@ void Level::GenerateFromFile(std::string filename)
 	int size = fin.tellg();
 	fin.seekg(0, std::ios::beg);
 	
-	if (fin.tellg() % sizeof(Object) != 0)
+	if (size % sizeof(Object) != 0)
 	{
 		std::string msg = "the file " + filename + " is corrupted\n";
 		throw std::exception(msg.c_str());

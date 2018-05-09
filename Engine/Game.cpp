@@ -71,7 +71,7 @@ void Game::UpdateModel()
 	int i = (42);
 	fout.write(reinterpret_cast<const char*>(&i), sizeof(int));
 	fout.close();
-//	level.GenerateFromFile("binfile.lvl");
+    level.GenerateFromFile("demoLevel.lvl");
 }
 
 void Game::ComposeFrame()

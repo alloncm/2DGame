@@ -55,8 +55,9 @@ bool PhysicsBody::Collision(PhysicsMat * mat)
 	//needs to check only the standing animation rect and not the falling animation for example
 	if (this->GetRect().IsColliding(matRect))
 	{
-		if (matRect.GetTopLeft().y<(this->position.y-this->height)&&matRect.GetBotoomRight().y>this->position.y)
+		if (matRect.GetTopLeft().y<(this->position.y-this->height) && matRect.GetBotoomRight().y>this->position.y)
 		{
+			//not getting to this piece of code 
 			velocity.x = 0;
 
 			//adjust the position of the body after hitting the material

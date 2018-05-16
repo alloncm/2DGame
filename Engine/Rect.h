@@ -65,8 +65,6 @@ public:
 		this->bRight = v;
 	}
 	bool IsInside(const Vec2_<T>& l)const
-	//not working as intend 
-	//needs to fix
 	{
 		if ((l.x >= tLeft.x&&l.x <= bRight.x) && (l.y >= tLeft.y&&l.y <= bRight.y))
 		{

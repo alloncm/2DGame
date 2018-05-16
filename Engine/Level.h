@@ -9,12 +9,14 @@ class Level
 public:
 	enum class Type
 	{
+		NoType = -1,
 		Tile,
 		RightTile,
 		LeftTile,
 		RightCornerTile,
-		LeftCotnerTile,
-		Hero
+		LeftCornerTile,
+		Hero,
+		Count
 	};
 
 	struct Object
@@ -38,9 +40,9 @@ protected:
 	Timer timer;
 	std::vector<PhysicsMat> ground;
 public:
-	Level(Character&& h,PhysicsMat&& g,float gra);
+	Level(Character&& h, float gra, std::string level);
 	void Draw(Graphics& gfx);
 	void Update(int dir, bool jump,bool attack);
 	void Input(int dir,bool jump,bool attack);
-	void GenerateFromFile(std::string filename);
+	void LoadLevel(std::string filename);
 };

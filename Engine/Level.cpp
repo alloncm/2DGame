@@ -1,21 +1,15 @@
 
 #include "Level.h"
 
-Level::Level(Character&& h, PhysicsMat&& g,float gra)
+Level::Level(Character&& h,float gra,std::string level)
 	:
 	gravity(gra)
 {
 	hero = std::make_unique<Character>(std::move(h));
-	ground.emplace_back(samples[4]);
 
 	hero->AddConstantForce(Vec2_<float>(0, gravity));
 
-	std::ofstream fout ("binfile.lvl", std::ios::binary);
-	int a = 0, b = 0, c = 0;
-	fout.write(reinterpret_cast<char* > (&a), sizeof(int));
-	fout.write(reinterpret_cast<char* >(&b), sizeof(int));
-	fout.write(reinterpret_cast<char* >(&c), sizeof(int));
-
+	LoadLevel(level);
 }
 
 
@@ -55,7 +49,7 @@ void Level::Input(int dir, bool jump,bool attack)
 	hero->HandleInput(dir, jump,attack);
 }
 
-void Level::GenerateFromFile(std::string filename)
+void Level::LoadLevel(std::string filename)
 {
 	std::ifstream fin(filename,std::ios::binary|std::ios::ate);
 	fin.exceptions(std::ios::badbit | std::ios::failbit);
@@ -83,14 +77,13 @@ void Level::GenerateFromFile(std::string filename)
 			hero->SetPosition(temp.position);
 			break;
 		default:
-			if (temp.type <= (Type::LeftCotnerTile) && temp.type >= Type(0))
+			if (temp.type <= (Type::LeftCornerTile) && temp.type >= Type(0))
 			{
-				ground.emplace_back(samples[int(Type::Tile)]);
+				ground.emplace_back(samples[int(temp.type)]);
 				ground[ground.size() - 1].SetPosition(temp.position);
 			}
 			break;
 		}
 	}
-	
 }
 

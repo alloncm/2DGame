@@ -34,8 +34,8 @@ protected:
 	attacking is differnt than the one walking or moving or falling. 
 	*/
 public:
-	Character(float mass, Vec2_<int>pos, int w, int h,float hd, float spe);
-	virtual void Update(float dt)override;
+	Character(float mass, Vec2_<float>pos, int w, int h,float hd, float spe);
+	virtual void Update(float dt, std::vector<PhysicsMat>& mats)override;
 	virtual void Draw(Graphics& gfx)override;
 	void HandleInput(int dir, bool jump,bool attack);							// dir: 0 not moving 1 right -1 left
 	virtual RectI GetRect()const override;

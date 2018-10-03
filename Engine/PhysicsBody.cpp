@@ -1,6 +1,6 @@
 #include "PhysicsBody.h"
 
-PhysicsBody::PhysicsBody(float m, Vec2_<int> pos, int w, int h)
+PhysicsBody::PhysicsBody(float m, Vec2_<float> pos, int w, int h)
 	:
 	mass(m),
 	position(pos),
@@ -12,12 +12,51 @@ PhysicsBody::PhysicsBody(float m, Vec2_<int> pos, int w, int h)
 {
 }
 
-void PhysicsBody::Update(float dt)
+void PhysicsBody::Update(float dt, std::vector<PhysicsMat>& mats)
 {
 	UpdateForces();
-
 	velocity = velocity + (acceleration*dt);
-	position += Vec2_<int>(int(velocity.x),int(velocity.y));
+	UpdatePhysics(mats);
+}
+
+void PhysicsBody::UpdatePhysics(std::vector<PhysicsMat>& mats)
+{
+	for (int i = 0; i < mats.size(); i++)
+	{
+		Collision(&mats[i]);
+	}
+	MoveBody(mats);
+}
+
+void PhysicsBody::MoveBody(std::vector<PhysicsMat>& mats)
+{
+
+	float length = velocity.GetLength();
+	auto v = velocity.Normalize();
+
+	int countColl = 0;
+	for (float f = 0.0f; f < length; f += v.GetLength())
+	{
+		for (int i = 0; i < mats.size(); i++)
+		{
+			if (Collision(&mats[i]))
+			{
+				countColl++;
+			}
+		}
+		
+		if (countColl > 0)
+		{
+			length = velocity.GetLength();
+			v = velocity.Normalize();
+		}
+		
+		position += v;
+		
+		countColl = 0;
+	}
+
+
 }
 
 void PhysicsBody::AddConstantForce(Vec2_<float> force)
@@ -51,42 +90,56 @@ RectI PhysicsBody::GetRect() const
 
 bool PhysicsBody::Collision(PhysicsMat * mat)
 {
-	RectI matRect = mat->GetRect();
-	//needs to check only the standing animation rect and not the falling animation for example
-	if (this->GetRect().IsColliding(matRect))
-	{
-		if (matRect.GetTopLeft().y<(this->position.y-this->height) && matRect.GetBotoomRight().y>this->position.y)
-		{
-			//not getting to this piece of code 
-			velocity.x = 0;
+	auto matRect = mat->GetRect();
+	auto rect = this->GetRect();
 
-			//adjust the position of the body after hitting the material
-			//check this piece of code
-			if (matRect.GetTopLeft().x > this->position.x)
+	//the vector needs to detects one pixel to each side cause he is on it not in it
+	if (matRect.IsColliding(this->GetRect()))
+	{
+		std::vector<Vec2_<int>> vectors;
+		Vec2_<int>* vecs = matRect.GetPvectors();
+		for (int i = 0; i < 4; i++)
+		{
+			if (rect.IsInside(*(vecs + i)))
 			{
-				this->position.x = matRect.GetTopLeft().x + this->width;
-			}
-			else if (matRect.GetBotoomRight().x < this->position.x)
-			{
-				this->position.x = matRect.GetBotoomRight().x;
+				
+				if (vectors.size()<2)
+				{
+					vectors.emplace_back(*(vecs + i));
+				}
 			}
 		}
-		else
+		delete[] vecs;
+		vecs = nullptr;
+		if (vectors.size() < 2)
 		{
-			velocity.y = 0;
-
-			//adjust the position of the body after hitting the material
-			if (matRect.GetTopLeft().y > this->position.y)		//the body is on the mat
+			vecs = rect.GetPvectors();
+			for (int i = 0; i < 4; i++)
 			{
-				this->position.y = matRect.GetTopLeft().y - this->height;
+				if (matRect.IsInside(*(vecs+i)))
+				{
+					if (vectors.size()<2)
+					{
+						vectors.emplace_back(*(vecs + i));
+					}
+				}
 			}
-			else if (matRect.GetBotoomRight().y < this->position.y)
-			{
-				this->position.y = matRect.GetBotoomRight().y;
-			}
+			delete[] vecs;
+			vecs = nullptr;
+		}
+		
+		Vec2_<int> v = vectors[0] - vectors[1];
+		if (std::abs(v.x) > std::abs(v.y))
+		{
+			this->velocity.y = 0;
+		}
+		else if (std::abs(v.x) < std::abs(v.y))
+		{
+			this->velocity.x = 0;
 		}
 		return true;
 	}
+	
 	return false;
 }
 
@@ -101,7 +154,7 @@ Vec2_<float> PhysicsBody::GetSumForces()
 	return sumForces;
 }
 
-void PhysicsBody::SetPosition(Vec2_<int> pos)
+void PhysicsBody::SetPosition(Vec2_<float> pos)
 {
 	this->position = pos;
 }

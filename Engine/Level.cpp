@@ -41,7 +41,7 @@ void Level::Update(int dir, bool jump,bool attack)
 
 	Input(dir, jump&&onGround,attack);
 	float dt = timer.Tick();
-	hero->Update(dt);
+	hero->Update(dt,ground);
 }
 
 void Level::Input(int dir, bool jump,bool attack)
@@ -74,7 +74,7 @@ void Level::LoadLevel(std::string filename)
 		switch (temp.type)
 		{
 		case(Type::Hero):
-			hero->SetPosition(temp.position);
+			hero->SetPosition(Cast(temp.position));
 			break;
 		default:
 			if (temp.type <= (Type::LeftCornerTile) && temp.type >= Type(0))

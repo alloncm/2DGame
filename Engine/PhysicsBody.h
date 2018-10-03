@@ -10,23 +10,25 @@ protected:
 	float mass;
 	Vec2_<float> velocity;
 	Vec2_<float> acceleration;
-	Vec2_<int> position;
+	Vec2_<float> position;
 	Vec2_<float> eForces;					//forces that are used all the time like gravity
 	int width;
 	int height;
 	std::vector<Vec2_<float>>forces;		//forces which are being used only once like a punch or explosion or even jumping
 protected:
-	PhysicsBody(float mass, Vec2_<int>pos, int w, int h);
+	PhysicsBody(float mass, Vec2_<float>pos, int w, int h);
 public:
 	virtual void Draw(Graphics& gfx) = 0;
-	virtual void Update(float dt);
+	virtual void Update(float dt, std::vector<PhysicsMat>& mats);
+	virtual void UpdatePhysics( std::vector<PhysicsMat>& mats);
+	void MoveBody( std::vector<PhysicsMat>& mats);
 	void AddConstantForce(Vec2_<float> force);
 	void AddForce(Vec2_<float> force);
 	void AddFraction(float f, float g);
 	virtual RectI GetRect()const;
 	bool Collision(PhysicsMat* mat);
 	Vec2_<float> GetSumForces();
-	void SetPosition(Vec2_<int> pos);
+	void SetPosition(Vec2_<float> pos);
 	virtual ~PhysicsBody() = default;
 private:
 	void UpdateForces();

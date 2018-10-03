@@ -32,7 +32,7 @@ public:
 		tLeft({ center.x - width / 2,center.y - height / 2 }),
 		bRight({ center.x + width / 2,center.y + height / 2 })
 	{}
-	Rect& operator=(const Rect<T>& r)
+	Rect<T>& operator=(const Rect<T>& r)
 	{
 		this->tLeft = r.tLeft;
 		this->bRight = r.bRight;
@@ -103,7 +103,15 @@ public:
 		this->bRight -= rect.bRight;
 		return *this;
 	}
-	
+	Vec2_<T>* GetPvectors()
+	{
+		Vec2_<T>* pvecs = new Vec2_<T>[4];			//for each vector in the rect
+		*(pvecs + 0) = this->tLeft;
+		*(pvecs + 1) = Vec2_<T>(bRight.x, tLeft.y);
+		*(pvecs + 2) = this->bRight;
+		*(pvecs + 3) = Vec2_<T>(tLeft.x, bRight.y);
+		return pvecs;
+	}
 	static Rect<int> GetRectI(Vec2_<T> v1, Vec2_<T> v2)
 	{
 		return RectI({ (int)v1.x,(int)v1.y }, { (int)v2.x,(int)v2.y});

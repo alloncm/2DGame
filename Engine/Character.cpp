@@ -1,6 +1,6 @@
 #include "Character.h"
 
-Character::Character(float mass, Vec2_<int> pos, int w, int h,float hd, float spe)
+Character::Character(float mass, Vec2_<float> pos, int w, int h,float hd, float spe)
 	:
 	PhysicsBody(mass,pos,w,h),
 	sprite(SpriteManager::GetManager().Get("busterComplete.bmp")),
@@ -79,15 +79,15 @@ Character::Character(float mass, Vec2_<int> pos, int w, int h,float hd, float sp
 	toRemove =  RectI(Vec2_<int>(left, top), Vec2_<int>(right, bottom));
 }
 
-void Character::Update(float dt)
+void Character::Update(float dt, std::vector<PhysicsMat>& mats)
 {
-	PhysicsBody::Update(dt);
+	PhysicsBody::Update(dt,mats);
 	animations[int(iCurrent)].Update(dt);
 }
 
 void Character::Draw(Graphics & gfx)
 {
-	animations[int(iCurrent)].Draw(this->position,gfx);
+	animations[int(iCurrent)].Draw(Cast(this->position),gfx);
 }
 
 void Character::HandleInput(int dir, bool jump,bool attack)

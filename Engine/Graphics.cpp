@@ -250,7 +250,10 @@ void Graphics::DrawRect(RectI rect,Color c)
 	{
 		for (int j = rect.GetTopLeft().y; j < rect.GetBotoomRight().y; j++)
 		{
-			PutPixel(i, j, c);
+			if (this->GetScreenRect().IsInside(Vec2_<int>(i, j)))
+			{
+				PutPixel(i, j, c);
+			}
 		}
 	}
 }

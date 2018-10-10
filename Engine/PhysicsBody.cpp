@@ -37,6 +37,7 @@ void PhysicsBody::MoveBody(std::vector<PhysicsMat>& mats)
 	int countColl = 0;
 	for (float f = 0.0f; f < length; f += v.GetLength())
 	{
+		position += v;
 		for (int i = 0; i < mats.size(); i++)
 		{
 			if (Collision(&mats[i]))
@@ -45,13 +46,13 @@ void PhysicsBody::MoveBody(std::vector<PhysicsMat>& mats)
 			}
 		}
 		
+		
 		if (countColl > 0)
 		{
 			length = velocity.GetLength();
 			v = velocity.Normalize();
 		}
 		
-		position += v;
 		
 		countColl = 0;
 	}
@@ -92,50 +93,55 @@ bool PhysicsBody::Collision(PhysicsMat * mat)
 {
 	auto matRect = mat->GetRect();
 	auto rect = this->GetRect();
+	auto IsBetween = [](int t, int b, int x)->bool 
+	{
+		return((x<t&&x>b)||(x<b&&x>t));
+	};
+	int top = matRect.GetTopLeft().y;
+	int bottom = matRect.GetBotoomRight().y;
+	auto IsHeroBetweenHeight = [&top,&bottom,IsBetween](int hero)->bool
+	{ 
+		return (IsBetween(top, bottom, hero) || IsBetween(top, bottom, hero));
+	};
 
-	//the vector needs to detects one pixel to each side cause he is on it not in it
 	if (matRect.IsColliding(this->GetRect()))
 	{
-		std::vector<Vec2_<int>> vectors;
-		Vec2_<int>* vecs = matRect.GetPvectors();
-		for (int i = 0; i < 4; i++)
+		//the body hit his left side in the mat
+		if ((rect.GetTopLeft().x == matRect.GetBotoomRight().x) && (IsHeroBetweenHeight(rect.GetTopLeft().y) || IsHeroBetweenHeight(rect.GetBotoomRight().y)))
 		{
-			if (rect.IsInside(*(vecs + i)))
+			if (this->velocity.x > 0)
 			{
-				
-				if (vectors.size()<2)
-				{
-					vectors.emplace_back(*(vecs + i));
-				}
+				this->velocity.x = 0;
 			}
 		}
-		delete[] vecs;
-		vecs = nullptr;
-		if (vectors.size() < 2)
+		//the body hit with his right side in the mat
+		else if (rect.GetBotoomRight().x == matRect.GetTopLeft().x && (IsHeroBetweenHeight(rect.GetTopLeft().y) || IsHeroBetweenHeight(rect.GetBotoomRight().y)))
 		{
-			vecs = rect.GetPvectors();
-			for (int i = 0; i < 4; i++)
+			if (this->velocity.x < 0)
 			{
-				if (matRect.IsInside(*(vecs+i)))
-				{
-					if (vectors.size()<2)
-					{
-						vectors.emplace_back(*(vecs + i));
-					}
-				}
+				this->velocity.x = 0;
 			}
-			delete[] vecs;
-			vecs = nullptr;
 		}
-		
-		Vec2_<int> v = vectors[0] - vectors[1];
-		if (std::abs(v.x) > std::abs(v.y))
+		//the body hit with his bottom in the mat
+		else if (rect.GetBotoomRight().y == matRect.GetTopLeft().y)
 		{
-			this->velocity.y = 0;
+			if (this->velocity.y > 0)
+			{
+				this->velocity.y = 0;
+			}
 		}
-		else if (std::abs(v.x) < std::abs(v.y))
+		//the body hit with his top in the mat
+		else if (rect.GetTopLeft().y == matRect.GetBotoomRight().y)
 		{
-			this->velocity.x = 0;
+			if (this->velocity.y < 0)
+			{
+				this->velocity.y = 0;
+			}
+		}
+		//the body got into the mat and i dont know what to do yet
+		else
+		{
+			throw std::exception("collision got into the mat and the collison detection is not good enough");
 		}
 		return true;
 	}

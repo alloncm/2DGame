@@ -33,45 +33,27 @@ void PhysicsBody::MoveBody(std::vector<PhysicsMat>& mats)
 
 	float length = velocity.GetLength();
 	auto v = velocity.Normalize();
-	int countColl = 0;
-	for (int i = 0; i < mats.size(); i++)
-	{
-		if (Collision(&mats[i]))
-		{
-			countColl++;
-		}
-	}
+	
 	for (float f = 0.0f; f < length; f += v.GetLength())
 	{
-
-		int count = 0;
 		//checks x axis for fault movement
 		this->position.x += v.x;
 		for (int i = 0; i < mats.size(); i++)
 		{
 			if (Collision(&mats[i]))
 			{
-				count++;
+				this->position.x -= v.x;
 			}
 		}
-		if (count >countColl )
-		{
-			this->position.x -= v.x;
-		}
 		
-		count = 0;
 		//checks y axis for fault movement
 		this->position.y += v.y;
 		for (int i = 0; i < mats.size(); i++)
 		{
 			if (Collision(&mats[i]))
 			{
-				count++;
+				this->position.y -= v.y;
 			}
-		}
-		if (count > countColl)
-		{
-			this->position.y -= v.y;
 		}
 	}
 

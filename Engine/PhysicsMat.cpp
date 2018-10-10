@@ -40,7 +40,7 @@ bool PhysicsMat::IsColiding(Rect<float> obj)
 
 void PhysicsMat::Draw(Graphics & gfx)
 {
-	/*
+	
 	if (texture != nullptr)
 	{
 		gfx.DrawSprite(rect.GetTopLeft().x, rect.GetTopLeft().y,drawRect, *texture, [this](Color c, int x, int y, Graphics& gfx) 
@@ -55,8 +55,8 @@ void PhysicsMat::Draw(Graphics & gfx)
 	{
 		gfx.DrawRect(Cast(rect), color);
 	}
-	*/
-	gfx.DrawRect(Cast(this->rect), Colors::Green);
+	
+	//gfx.DrawRect(Cast(this->rect), Colors::Green);
 }
 
 float PhysicsMat::GetFraction()

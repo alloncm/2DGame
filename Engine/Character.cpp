@@ -87,8 +87,8 @@ void Character::Update(float dt, std::vector<PhysicsMat>& mats)
 
 void Character::Draw(Graphics & gfx)
 {
-	//animations[int(iCurrent)].Draw(Cast(this->position),gfx);
-	gfx.DrawRect(this->GetRect(), Colors::Red);
+	animations[int(iCurrent)].Draw(Cast(this->position),gfx);
+	//gfx.DrawRect(this->GetRect(), Colors::Red);
 }
 
 void Character::HandleInput(int dir, bool jump,bool attack)

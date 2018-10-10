@@ -1,5 +1,6 @@
 #include "PhysicsBody.h"
 
+
 PhysicsBody::PhysicsBody(float m, Vec2_<float> pos, int w, int h)
 	:
 	mass(m),
@@ -8,7 +9,8 @@ PhysicsBody::PhysicsBody(float m, Vec2_<float> pos, int w, int h)
 	acceleration(Vec2_<float>(0.0f, 0.0f)),
 	eForces(Vec2_<float>(0.0f, 0.0f)),
 	width(w),
-	height(h)
+	height(h),
+	botoom(false)
 {
 }
 
@@ -21,19 +23,19 @@ void PhysicsBody::Update(float dt, std::vector<PhysicsMat>& mats)
 
 void PhysicsBody::UpdatePhysics(std::vector<PhysicsMat>& mats)
 {
-	for (int i = 0; i < mats.size(); i++)
-	{
-		Collision(&mats[i]);
-	}
 	MoveBody(mats);
 }
 
 void PhysicsBody::MoveBody(std::vector<PhysicsMat>& mats)
 {
-
+	botoom = false;
 	float length = velocity.GetLength();
-	auto v = velocity.Normalize();
+	auto v = velocity;
+	v.Normalize();
 	
+	
+	std::wstring ws = std::to_wstring(this->velocity.x) + L"," + std::to_wstring(this->velocity.y) + L"\n";
+	OutputDebugString(ws.c_str());
 	for (float f = 0.0f; f < length; f += v.GetLength())
 	{
 		//checks x axis for fault movement
@@ -42,6 +44,7 @@ void PhysicsBody::MoveBody(std::vector<PhysicsMat>& mats)
 		{
 			if (Collision(&mats[i]))
 			{
+				this->velocity.x = 0;
 				this->position.x -= v.x;
 			}
 		}
@@ -52,12 +55,18 @@ void PhysicsBody::MoveBody(std::vector<PhysicsMat>& mats)
 		{
 			if (Collision(&mats[i]))
 			{
+				if (velocity.y > 0)
+				{
+					botoom = true;
+				}
+				this->velocity.y = 0;
 				this->position.y -= v.y;
+				
 			}
 		}
 	}
-
-
+	ws = std::to_wstring(this->velocity.x) + L"," + std::to_wstring(this->velocity.y) + L"\n";
+	OutputDebugString(ws.c_str());
 }
 
 void PhysicsBody::AddConstantForce(Vec2_<float> force)
@@ -112,6 +121,12 @@ void PhysicsBody::SetPosition(Vec2_<float> pos)
 {
 	this->position = pos;
 }
+
+bool PhysicsBody::HitBottom()
+{
+	return botoom;
+}
+
 
 void PhysicsBody::UpdateForces()
 {

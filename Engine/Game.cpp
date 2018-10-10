@@ -27,7 +27,7 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	Ground(Rect<float>(50, 550, 64, 32), 0.2, "busterTiles.bmp", Rect<int>(0,0,64,32)),
 	ch(2,{100,100},48,48,0.1,2),
-	level(std::move(ch),30, "demoLevel.lvl")
+	level(std::move(ch),20, "demoLevel.lvl")
 {
 }
 

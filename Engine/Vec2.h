@@ -73,7 +73,7 @@ public:
 
 	float GetLength() const
 	{
-		return sqrt(x*x + y*y);
+		return sqrt((x*x) + (y*y));
 	}
 
 	Vec2_<T>& Normalize()

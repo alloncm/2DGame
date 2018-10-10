@@ -25,14 +25,8 @@ void Level::Draw(Graphics & gfx)
 
 void Level::Update(int dir, bool jump,bool attack)
 {
-	bool onGround = false;
-	for (int i = 0; i < ground.size(); i++)
-	{
-		if (hero->Collision(&ground[i]))
-		{
-			onGround = true;
-		}
-	}
+	bool onGround = hero->HitBottom();
+	
 	if (onGround)
 	{
 		hero->AddForce(Vec2_<float>(0, -gravity));

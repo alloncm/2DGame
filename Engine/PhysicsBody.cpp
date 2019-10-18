@@ -5,7 +5,7 @@ PhysicsBody::PhysicsBody(float m, Vec2_<float> pos, int w, int h)
 	:
 	mass(m),
 	position(pos),
-	velocity(Vec2_<float>(0.0f,0.0f)),
+	velocity(Vec2_<float>(0.0f, 0.0f)),
 	acceleration(Vec2_<float>(0.0f, 0.0f)),
 	eForces(Vec2_<float>(0.0f, 0.0f)),
 	width(w),
@@ -32,13 +32,10 @@ void PhysicsBody::MoveBody(std::vector<PhysicsMat>& mats)
 	float length = velocity.GetLength();
 	auto v = velocity;
 	v.Normalize();
-	
-	
-	std::wstring ws = std::to_wstring(this->velocity.x) + L"," + std::to_wstring(this->velocity.y) + L"\n";
-	OutputDebugString(ws.c_str());
+
 	for (float f = 0.0f; f < length; f += v.GetLength())
 	{
-		//checks x axis for fault movement
+		//checks x axis for invalid movement
 		this->position.x += v.x;
 		for (int i = 0; i < mats.size(); i++)
 		{
@@ -48,8 +45,8 @@ void PhysicsBody::MoveBody(std::vector<PhysicsMat>& mats)
 				this->position.x -= v.x;
 			}
 		}
-		
-		//checks y axis for fault movement
+
+		//checks y axis for invalid movement
 		this->position.y += v.y;
 		for (int i = 0; i < mats.size(); i++)
 		{
@@ -59,14 +56,25 @@ void PhysicsBody::MoveBody(std::vector<PhysicsMat>& mats)
 				{
 					botoom = true;
 				}
+
 				this->velocity.y = 0;
 				this->position.y -= v.y;
-				
 			}
 		}
 	}
-	ws = std::to_wstring(this->velocity.x) + L"," + std::to_wstring(this->velocity.y) + L"\n";
-	OutputDebugString(ws.c_str());
+
+	if (!botoom)
+	{
+		position.y++;
+		for (int i = 0; i < mats.size(); i++)
+		{
+			if (Collision(&mats[i]))
+			{
+				botoom = true;
+			}
+		}
+		position.y--;
+	}
 }
 
 void PhysicsBody::AddConstantForce(Vec2_<float> force)
@@ -79,9 +87,9 @@ void PhysicsBody::AddForce(Vec2_<float> force)
 	forces.emplace_back(force);
 }
 
-void PhysicsBody::AddFraction(float f,float g)
+void PhysicsBody::AddFraction(float f, float g)
 {
-	Vec2_<float> force(0,0);
+	Vec2_<float> force(0, 0);
 	if (velocity.x != 0)
 	{
 		force.x = f*-g*mass;			//its already negatice cause gravity is negative
@@ -95,14 +103,14 @@ void PhysicsBody::AddFraction(float f,float g)
 
 RectI PhysicsBody::GetRect() const
 {
-	return RectI(position.x,position.y,width,height);
+	return RectI(position.x, position.y, width, height);
 }
 
 bool PhysicsBody::Collision(PhysicsMat * mat)
 {
 	auto matRect = mat->GetRect();
 	auto rect = this->GetRect();
-	
+
 	return rect.IsColliding(matRect);
 }
 
@@ -131,7 +139,7 @@ bool PhysicsBody::HitBottom()
 void PhysicsBody::UpdateForces()
 {
 	Vec2_<float> sumForces(0, 0);
-	for (Vec2_<float>& f: forces)
+	for (Vec2_<float>& f : forces)
 	{
 		sumForces += f;
 	}
@@ -140,5 +148,5 @@ void PhysicsBody::UpdateForces()
 	forces.clear();
 
 	//get the acceleration based on Sigma F = m*a
-	acceleration = (eForces+sumForces) / mass;
+	acceleration = (eForces + sumForces) / mass;
 }

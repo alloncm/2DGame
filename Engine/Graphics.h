@@ -104,7 +104,7 @@ public:
 	}
 	RectI GetScreenRect()const;
 	void DrawRect(RectI rect,Color c);
-	//void ScreenShot(std::string& filename);
+	void ScreenShot(std::string& filename);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

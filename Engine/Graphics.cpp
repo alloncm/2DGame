@@ -258,7 +258,7 @@ void Graphics::DrawRect(RectI rect,Color c)
 	}
 }
 //Dont work needs more knowloadge and mybe GDI+
-/*
+
 void Graphics::ScreenShot(std::string & filename)
 {
 	BITMAPINFOHEADER bmpi;
@@ -283,7 +283,6 @@ void Graphics::ScreenShot(std::string & filename)
 
 	std::ofstream fout(filename, std::ios::binary);
 	fout.exceptions(std::ios::badbit | std::ios::failbit);
-
 	fout.write(reinterpret_cast<char*> (&bmph), sizeof(bmph));
 	fout.write(reinterpret_cast<char*> (&bmpi), sizeof(bmpi));
 
@@ -306,7 +305,7 @@ void Graphics::ScreenShot(std::string & filename)
 	}
 	fout.close();
 }
-*/
+
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)

@@ -154,7 +154,7 @@ Surface Surface::CutRect(Rect<int> r)const
 }
 
 //not working and not even using
-/*
+
 void Surface::Save(std::string & filename)
 {
 	BITMAPINFOHEADER bmpi;
@@ -183,8 +183,16 @@ void Surface::Save(std::string & filename)
 	fout.write(reinterpret_cast<char*> (&bmph), sizeof(bmph));
 	fout.write(reinterpret_cast<char*> (&bmpi), sizeof(bmpi));
 
+	for (auto i = pixels.begin(); i != pixels.end(); i++)
+	{
+		fout.put((*i).GetR());
+		fout.put((*i).GetG());
+		fout.put((*i).GetB());
+	}
+
+	fout.close();
 }
-*/
+
 
 bool Surface::operator==(const Surface& s)
 {

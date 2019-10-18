@@ -1,5 +1,5 @@
-/****************************************************************************************** 
- *	Chili DirectX Framework Version 16.07.20											  *	
+/******************************************************************************************
+ *	Chili DirectX Framework Version 16.07.20											  *
  *	Game.cpp																			  *
  *	Copyright 2016 PlanetChili.net <http://www.planetchili.net>							  *
  *																						  *
@@ -25,15 +25,15 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	Ground(Rect<float>(50, 550, 64, 32), 0.2, "busterTiles.bmp", Rect<int>(0,0,64,32)),
-	ch(2,{100,100},48,48,0.1,2),
-	level(std::move(ch),20, "demoLevel.lvl")
+	Ground(Rect<float>(50, 550, 64, 32), 0.2, "busterTiles.bmp", Rect<int>(0, 0, 64, 32)),
+	ch(2, { 100,100 }, 48, 48, 0.1, 2),
+	level(std::move(ch), 20, "demoLevel.lvl")
 {
 }
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
+	gfx.BeginFrame();
 	UpdateModel();
 	ComposeFrame();
 	gfx.EndFrame();
@@ -41,9 +41,9 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	
+	bool attack = false;
 	int input = 0;
-	if (wnd.kbd.KeyIsPressed(VK_LEFT)&& wnd.kbd.KeyIsPressed(VK_RIGHT))
+	if (wnd.kbd.KeyIsPressed(VK_LEFT) && wnd.kbd.KeyIsPressed(VK_RIGHT))
 	{
 		input = 0;
 	}
@@ -56,17 +56,20 @@ void Game::UpdateModel()
 		input = 1;
 	}
 	bool jump = false;
-	if (wnd.kbd.KeyIsPressed(VK_UP))
+	Keyboard::Event kbdEvent = wnd.kbd.ReadKey();
+	if (kbdEvent.GetCode() == VK_UP && kbdEvent.IsPress())
 	{
 		jump = true;
 	}
-	bool attack = false;
-	auto eve = wnd.kbd.ReadKey();
-	if (eve.GetCode()==VK_SPACE&&eve.IsPress())
+	if (kbdEvent.GetCode() == VK_SPACE && kbdEvent.IsPress())
 	{
 		attack = true;
 	}
-	level.Update(input, jump,attack);
+	if (wnd.kbd.KeyIsPressed(VK_F1))
+	{
+		gfx.ScreenShot(std::string("screenShoot.bmp"));
+	}
+	level.Update(input, jump, attack);
 }
 
 void Game::ComposeFrame()
